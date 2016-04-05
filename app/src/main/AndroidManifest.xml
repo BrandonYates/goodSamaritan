@@ -16,6 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.syntacticsugar.goodsamaritan.LoginActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name="com.syntacticsugar.goodsamaritan.SignupActivity" android:theme="@style/AppTheme.Dark" />
     </application>
 
 </manifest>
