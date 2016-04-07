@@ -3,8 +3,6 @@ package com.syntacticsugar.goodsamaritan;
 /**
  * Created by brandonyates on 4/4/16.
  */
-//public class LoginActivity {
-//}
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -16,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -73,7 +74,29 @@ public class LoginActivity extends AppCompatActivity {
         String email = _emailText.getText().toString();
         String password = _passwordText.getText().toString();
 
-        // TODO: Implement your own authentication logic here.
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.get("http://www.google.com", null, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                // called before request is started
+            }
+
+            @Override
+            public void onSuccess(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] response) {
+                // called when response HTTP status is "200 OK"
+            }
+
+            @Override
+            public void onFailure(int statusCode, cz.msebera.android.httpclient.Header[] headers, byte[] errorResponse, Throwable e) {
+                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+            }
+
+            @Override
+            public void onRetry(int retryNo) {
+                // called when request is retried
+            }
+        });
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
