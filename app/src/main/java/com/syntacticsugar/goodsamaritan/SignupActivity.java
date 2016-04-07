@@ -3,8 +3,6 @@ package com.syntacticsugar.goodsamaritan;
 /**
  * Created by brandonyates on 4/4/16.
  */
-//public class SignupActivity {
-//}
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -22,18 +20,24 @@ import butterknife.ButterKnife;
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
 
-    @Bind(R.id.input_name) EditText _nameText;
+    @Bind(R.id.input_first_name) EditText _firstNameText;
+    @Bind(R.id.input_last_name) EditText _lastNameText;
     @Bind(R.id.input_email) EditText _emailText;
-    @Bind(R.id.input_password) EditText _passwordText;
+    @Bind(R.id.input_password1) EditText _passwordText1;
+    @Bind(R.id.input_password2) EditText _passwordText2;
     @Bind(R.id.btn_signup) Button _signupButton;
     @Bind(R.id.link_login) TextView _loginLink;
+
+    UserService userService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
+        userService = new UserService();
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,33 +70,44 @@ public class SignupActivity extends AppCompatActivity {
         progressDialog.setMessage("Creating Account...");
         progressDialog.show();
 
-        String name = _nameText.getText().toString();
-        String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        final String firstName = _firstNameText.getText().toString();
+        final String lastName = _lastNameText.getText().toString();
+        final String email = _emailText.getText().toString();
+        final String password1 = _passwordText1.getText().toString();
 
-        // TODO: Implement your own signup logic here.
-
+        // TODO: Implement signup logic here.
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        // On complete call either onSignupSuccess or onSignupFailed
-                        // depending on success
+                        // On complete call either onLoginSuccess or onLoginFailed
+
+                        userService.hello();
+//                        try {
+//                            userService.createUser(firstName, lastName, email, password1);
+//                        }
+//                        catch (JSONException e) {
+//                            System.out.println(e.getMessage());
+//                            e.printStackTrace();
+//                        }
+
                         onSignupSuccess();
-                        // onSignupFailed();
+                        onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
+//        progressDialog.dismiss();
     }
 
 
     public void onSignupSuccess() {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
-        finish();
+        Toast.makeText(getBaseContext(), "signup succeeded", Toast.LENGTH_LONG).show();
+//        finish();
     }
 
     public void onSignupFailed() {
-        Toast.makeText(getBaseContext(), "Login failed", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "signup failed", Toast.LENGTH_LONG).show();
 
         _signupButton.setEnabled(true);
     }
@@ -100,15 +115,24 @@ public class SignupActivity extends AppCompatActivity {
     public boolean validate() {
         boolean valid = true;
 
-        String name = _nameText.getText().toString();
+        String firstName = _firstNameText.getText().toString();
+        String lastName = _lastNameText.getText().toString();
         String email = _emailText.getText().toString();
-        String password = _passwordText.getText().toString();
+        String password1 = _passwordText1.getText().toString();
+        String password2 = _passwordText2.getText().toString();
 
-        if (name.isEmpty() || name.length() < 3) {
-            _nameText.setError("at least 3 characters");
+        if(firstName.isEmpty() || firstName.length() < 2 || firstName.length() > 50) {
+            _firstNameText.setError("enter a valid name");
             valid = false;
         } else {
-            _nameText.setError(null);
+            _firstNameText.setError(null);
+        }
+
+        if(lastName.isEmpty() || lastName.length() < 2 || lastName.length() > 50) {
+            _lastNameText.setError("enter a valid name");
+            valid = false;
+        } else {
+            _lastNameText.setError(null);
         }
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -118,11 +142,19 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            _passwordText.setError("between 4 and 10 alphanumeric characters");
+        if (password1.isEmpty() || password1.length() < 4 || password1.length() > 15) {
+            _passwordText1.setError("between 4 and 15 alphanumeric characters");
             valid = false;
         } else {
-            _passwordText.setError(null);
+            _passwordText1.setError(null);
+        }
+
+        if (password1.equals(password2)) {
+            _passwordText2.setError(null);
+        } else {
+            _passwordText2.setError("passwords do not match");
+            Log.d(TAG, "p1: " + password1 + " p2: " + password2);
+            valid = false;
         }
 
         return valid;

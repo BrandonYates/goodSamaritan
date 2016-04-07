@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.syntacticsugar.goodsamaritan.LoginActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name="com.syntacticsugar.goodsamaritan.MainActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name="com.syntacticsugar.goodsamaritan.SignupActivity" android:theme="@style/AppTheme.Dark" />
     </application>
 

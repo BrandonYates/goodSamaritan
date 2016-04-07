@@ -31,7 +31,7 @@ android:fitsSystemWindows="true"
             android:inputType="textEmailAddress"
             android:hint="Email"
             android:autoText="true"
-            android:text="your@email.com" />
+            android:textColor="#FFFFFF" />
     </android.support.design.widget.TextInputLayout>
 
     <!-- Password Label -->
@@ -45,7 +45,9 @@ android:fitsSystemWindows="true"
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:hint="Password"
-            android:autoText="false" />
+            android:autoText="false"
+            android:password="true"
+            android:textColor="#FFFFFF" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.v7.widget.AppCompatButton
@@ -63,7 +65,10 @@ android:fitsSystemWindows="true"
         android:layout_marginBottom="24dp"
         android:text="No account yet? Create one"
         android:gravity="center"
-        android:textSize="16dip"/>
+        android:textSize="16dip"
+        android:focusable="true"
+        android:enabled="true"
+        android:textColorHighlight="#000000" />
 
 </LinearLayout>
 </ScrollView>

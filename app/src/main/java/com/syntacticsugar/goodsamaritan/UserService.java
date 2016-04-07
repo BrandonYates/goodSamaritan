@@ -12,7 +12,7 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by brandonyates on 4/5/16.
  *
- * calls in this class will usually correspond 1 to 1 with the equivalent call int he backend UserService
+ * calls in this class will usually correspond 1 to 1 with the equivalent call in the backend UserService
  *
  */
 public class UserService {
@@ -39,7 +39,46 @@ public class UserService {
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
                 System.out.println(timeline.toString());
             }
+            @Override
+            public void onFailure (int errorCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                System.out.println(errorResponse.toString());
+            }
+
+            @Override
+            public void onFailure (int errorCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                System.out.println(errorResponse.toString());
+            }
         });
+    }
+
+    public void signIn (String emailAddress, String password) throws JSONException {
+        RequestParams params = new RequestParams();
+
+        params.add("emailAddress", emailAddress);
+        params.add("password", password);
+
+//        RestUtils.post("signIn/params", params, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                // If the response is JSONObject instead of expected JSONArray
+//                System.out.println(response.toString());
+//            }
+//
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+//                System.out.println(timeline.toString());
+//            }
+//
+//            @Override
+//            public void onFailure (int errorCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+//                System.out.println(errorResponse.toString());
+//            }
+//
+//            @Override
+//            public void onFailure (int errorCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                System.out.println(errorResponse.toString());
+//            }
+//        });
     }
 
     public void findUserByEmail (String emailAddress) throws JSONException {
@@ -48,6 +87,22 @@ public class UserService {
         params.add("emailAddress", emailAddress);
 
         RestUtils.get("findUserByEmail", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                System.out.println(response.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                System.out.println(timeline.toString());
+            }
+        });
+    }
+
+    public void hello () {
+
+        RestUtils.get("hello", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
