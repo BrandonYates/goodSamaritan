@@ -1,12 +1,131 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:background="#1e7ea9">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_screen"
+    android:id="@+id/linLayout1"
+    android:weightSum="1">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:id="@+id/linLayout2"
+        android:weightSum="1">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/appLogo"
+            android:layout_gravity="left"
+            android:background="@drawable/gd_logo"
+            android:layout_marginBottom="5dp"
+            android:layout_weight=".1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <fragment
+            class="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".4"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@id/appLogo"/>
+
+
+
+        <ListView
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".3"
+            android:layout_below="@id/map"
+            android:id="@+id/listView"
+            android:background="#3D3D3D"
+            android:layout_gravity="center_horizontal" />
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".2"
+            android:layout_below="@id/map"
+            android:id="@+id/linLayout3"
+            android:weightSum="1">
+
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".7"
+                android:layout_below="@id/map"
+                android:id="@+id/linLayout4"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_weight=".5"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:id="@+id/myPointsTitle"
+                    android:text="@string/myPointsTitleText"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff" />
+
+
+                <LinearLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight=".5"
+                    android:id="@+id/linLayout5"
+                    android:weightSum="1">
+
+                    <android.support.v4.widget.Space
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight=".3"/>
+
+                    <ImageView
+                        android:id="@+id/heartLogo"
+                        android:layout_gravity="left"
+                        android:background="@drawable/heart"
+                        android:layout_marginBottom="5dp"
+                        android:layout_weight=".2"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent" />
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_weight=".5"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:id="@+id/myPoints"
+                        android:text="@string/myPointsText"
+                        android:textSize="28sp"
+                        android:textStyle="bold"
+                        android:textColor="#ffffffff" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/menuButton"
+                android:text="@string/menuButtonText"
+                android:layout_marginTop="30dp"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight=".30"
+                android:onClick="gotoMenu"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
