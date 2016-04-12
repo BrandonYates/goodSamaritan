@@ -12,4 +12,17 @@
     <string name="myPointsTitleText">My Good Deed Points</string>
     <string name="myPointsText">+ 12</string>
     <string name="menuButtonText">Menu</string>
+    <string name="detailsPageTitle">Good Deed Details</string>
+    <string name="postedByText">Posted By</string>
+    <string name="userText">SomeUser</string>
+    <string name="detailsTitleText">Troubled Youth</string>
+    <string name="detailText">There are some troubled youth hanging out asdfjka sdflj asdflkjasdfljasdlfkjasdf asdf laksdfj alsdkjf lasdjf lasdjf lasdjf laksjdf lkajsdfljasdlfkj asdf ds f asdf a sdf a sd</string>
+    <string name="addressText">123 anywhere st</string>
+    <string name="address2Text">Anytown, Fl 32407</string>
+    <string name="emailText">user@email.com</string>
+    <string name="availablePointsText">+ 4 Good Deed Points</string>
+    <string name="acceptButtonText">Accept</string>
+    <string name="declineButtonText">Decline</string>
+
+
 </resources>
