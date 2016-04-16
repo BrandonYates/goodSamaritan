@@ -15,8 +15,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -81,18 +91,61 @@ public class LoginActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
+//                         On complete call either onLoginSuccess or onLoginFailed
 
-//                        userService.hello();
-//                        try {
+                        AsyncHttpClient client = new AsyncHttpClient();
+                        RequestParams params = new RequestParams();
+                        params.add("emailAddress", email);
+                        params.add("password", password);
+                        try {
+
+                            client.post("http://10.0.2.2:8080/authenticate", params, new AsyncHttpResponseHandler() {
+                            @Override
+                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                System.out.println("##############");
+                                System.out.println("onSuccess");
+                                try {
+                                    if (responseBody == null) {
+                                        System.out.println("# responseBody Null");
+                                        throw new Exception();
+                                    }
+                                    String response = new String(responseBody, "UTF-8");
+                                    // JSON Object
+                                    JSONObject obj = new JSONObject(response);
+
+                                    System.out.println(obj.toString());
+
+                                } catch (Exception e) {
+                                    // TODO Auto-generated catch block
+                                    System.out.println("EXCEPTION!");
+                                    System.out.println("EXCEPTION!");
+                                    System.out.println("EXCEPTION!");
+                                    System.out.println("EXCEPTION!");
+                                    e.printStackTrace();
+                                    onLoginFailed();
+                                }
+                                onLoginSuccess();
+                                System.out.println("##############");
+                            }
+
+                            @Override
+                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                try {
+                                    String response = new String(responseBody, "UTF-8");
+                                    System.out.println(statusCode + ": " + response);
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
 //                            userService.signIn(email, password);
-//                        } catch (JSONException e) {
-//                            System.out.println(e.getMessage());
-//                            e.printStackTrace();
-//                        }
+//                            onLoginSuccess();
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            onLoginFailed();
+                            e.printStackTrace();
+                        }
 
-                        onLoginSuccess();
-                        onLoginFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
