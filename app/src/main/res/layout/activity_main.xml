@@ -2,27 +2,20 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/main_screen"
     android:id="@+id/linLayout1"
     android:weightSum="1">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:id="@+id/linLayout2"
-        android:weightSum="1">
+
 
         <ImageView
             android:id="@+id/appLogo"
             android:layout_gravity="left"
             android:background="@drawable/gd_logo"
-            android:layout_marginBottom="5dp"
-            android:layout_weight=".1"
+            android:layout_weight=".2"
             android:layout_width="match_parent"
             android:layout_height="0dp" />
 
@@ -31,7 +24,7 @@
             android:id="@+id/map"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
-            android:layout_weight=".4"
+            android:layout_weight=".3"
             android:layout_marginBottom="5dp"
             android:layout_below="@id/appLogo"/>
 
@@ -74,7 +67,7 @@
                     android:gravity="center"
                     android:id="@+id/myPointsTitle"
                     android:text="@string/myPointsTitleText"
-                    android:textSize="20sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff" />
 
@@ -110,7 +103,7 @@
                         android:gravity="center"
                         android:id="@+id/myPoints"
                         android:text="@string/myPointsText"
-                        android:textSize="28sp"
+                        android:textSize="50sp"
                         android:textStyle="bold"
                         android:textColor="#ffffffff" />
                 </LinearLayout>
@@ -125,7 +118,5 @@
                 android:layout_height="50dp"
                 android:layout_weight=".30"
                 android:onClick="gotoMenu"/>
-
         </LinearLayout>
-    </LinearLayout>
 </LinearLayout>
