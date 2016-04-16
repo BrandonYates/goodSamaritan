@@ -20,7 +20,6 @@ public class RestUtils {
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 
-
     public static void getByUrl(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(url, params, responseHandler);
     }
