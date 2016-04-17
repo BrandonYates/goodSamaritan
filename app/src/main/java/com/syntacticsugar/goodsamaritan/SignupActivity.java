@@ -5,6 +5,7 @@ package com.syntacticsugar.goodsamaritan;
  */
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -84,7 +85,6 @@ public class SignupActivity extends AppCompatActivity {
                     public void run() {
                         // On complete call either onLoginSuccess or onLoginFailed
 
-                        userService.hello();
                         try {
                             userService.createUser(firstName, lastName, email, password1);
                         } catch (JSONException e) {
@@ -105,7 +105,9 @@ public class SignupActivity extends AppCompatActivity {
         _signupButton.setEnabled(true);
         setResult(RESULT_OK, null);
         Toast.makeText(getBaseContext(), "signup succeeded", Toast.LENGTH_LONG).show();
-//        finish();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivityForResult(intent, 0);
+        finish();
     }
 
     public void onSignupFailed() {

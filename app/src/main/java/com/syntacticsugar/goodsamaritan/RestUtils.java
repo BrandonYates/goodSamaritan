@@ -17,6 +17,7 @@ public class RestUtils {
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
+        System.out.println("url: " + getAbsoluteUrl(url));
         client.post(getAbsoluteUrl(url), params, responseHandler);
     }
 

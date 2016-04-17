@@ -4,6 +4,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,36 +31,76 @@ public class UserService {
         params.add("emailAddress", emailAddress);
         params.add("password", password);
 
+        System.out.println("CREATE USER!");
         System.out.println("params: " + params.toString());
 
         //build rest call
 
-    }
+        RestUtils.post("createUser/params", params, new AsyncHttpResponseHandler() {
 
-    public void signIn (String emailAddress, String password) throws JSONException {
-        RequestParams params = new RequestParams();
-
-        params.add("emailAddress", emailAddress);
-        params.add("password", password);
-
-        boolean result;
-        RestUtils.post("/authenticate", params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 System.out.println("##############");
                 System.out.println("onSuccess");
                 try {
-                    if(responseBody == null) {
+                    if (responseBody == null) {
                         System.out.println("# responseBody Null");
                         throw new Exception();
                     }
                     String response = new String(responseBody, "UTF-8");
+
                     // JSON Object
                     JSONObject obj = new JSONObject(response);
 
-                    if(response == null) {
+                    System.out.println(obj.toString());
+
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    System.out.println("EXCEPTION!");
+                    e.printStackTrace();
+                }
+                System.out.println("##############");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                try {
+                    String response = new String(responseBody, "UTF-8");
+                    System.out.println(statusCode + ": " + response);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    public void signIn (String emailAddress, String password) throws JSONException {
+        System.out.println("SIGN IN CALLED");
+        RequestParams params = new RequestParams();
+
+        params.add("emailAddress", emailAddress);
+        params.add("password", password);
+
+        RestUtils.post("authenticate", params, new AsyncHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                System.out.println("##############");
+                System.out.println("onSuccess");
+                System.out.println("statusCode: " + statusCode);
+                System.out.println("headers: " + headers.toString());
+                try {
+
+                    String response = new String(responseBody, "UTF-8");
+                    System.out.println("response: " + response);
+
+                    // JSON Object
+                    JSONObject obj = new JSONObject(response);
+
+                    if(statusCode != 200) {
                         System.out.println("##############");
-                        System.out.println("# responseBody Null");
+                        System.out.println("# error : " + statusCode);
                         System.out.println("##############");
                         throw new Exception();
                     }
