@@ -5,8 +5,8 @@
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/detail_screen"
-    android:id="@+id/linLayout1"
+    android:background="@drawable/blue"
+    android:id="@+id/linLayout20"
     android:weightSum="1">
 
         <ImageView android:src="@drawable/gd_logo"
@@ -88,12 +88,14 @@
         </android.support.design.widget.TextInputLayout>
 
         <!-- Signup Button -->
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_signup"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".1"
-            android:text="Create Account"/>
+    <Button
+        android:id="@+id/btn_signup"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".1"
+        android:background="#62a9ff"
+        android:onClick="signup"
+        android:text="@string/create_account"/>
 
         <TextView android:id="@+id/link_login"
             android:layout_width="fill_parent"

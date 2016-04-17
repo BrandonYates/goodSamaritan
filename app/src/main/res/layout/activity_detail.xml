@@ -5,7 +5,7 @@
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/detail_screen"
+    android:background="@drawable/green"
     android:id="@+id/linLayout1"
     android:weightSum="1">
 

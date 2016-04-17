@@ -16,6 +16,9 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONObject;
+
+
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @Override
@@ -29,6 +32,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         Typeface font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
         myPointsTitle.setTypeface(font);
         myPoints.setTypeface(font);
+        //end set custom font
+
+        String userInfo = getIntent().getStringExtra("userId");
+        System.out.println("user info is " + userInfo);
+
 
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
