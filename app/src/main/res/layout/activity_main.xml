@@ -5,8 +5,8 @@
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_screen"
-    android:id="@+id/linLayout1"
+    android:background="@drawable/red"
+    android:id="@+id/linLayout11"
     android:weightSum="1">
 
         <ImageView
@@ -41,7 +41,7 @@
             android:layout_height="0dp"
             android:layout_weight=".2"
             android:layout_below="@id/map"
-            android:id="@+id/linLayout3"
+            android:id="@+id/linLayout13"
             android:weightSum="1">
 
 
@@ -52,7 +52,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight=".7"
                 android:layout_below="@id/map"
-                android:id="@+id/linLayout4"
+                android:id="@+id/linLayout14"
                 android:weightSum="1">
 
                 <TextView
@@ -73,7 +73,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="0dp"
                     android:layout_weight=".5"
-                    android:id="@+id/linLayout5"
+                    android:id="@+id/linLayout15"
                     android:weightSum="1">
 
                     <android.support.v4.widget.Space

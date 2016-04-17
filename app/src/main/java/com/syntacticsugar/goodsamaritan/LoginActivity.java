@@ -115,7 +115,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                     System.out.println(obj.toString());
 
-                                    onLoginSuccess();
+                                    String userId = obj.getString("id");
+                                    System.out.println("userId is " + userId);
+                                    onLoginSuccess(userId);
                                     System.out.println("##############");
 
                                 } catch (Exception e) {
@@ -173,10 +175,11 @@ public class LoginActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
-    public void onLoginSuccess() {
+    public void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("userId", userId);
         startActivityForResult(intent, REQUEST_MAIN);
         finish();
     }

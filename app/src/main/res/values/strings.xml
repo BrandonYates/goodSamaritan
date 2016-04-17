@@ -23,6 +23,7 @@
     <string name="availablePointsText">+ 4 Good Deed Points</string>
     <string name="acceptButtonText">Accept</string>
     <string name="declineButtonText">Decline</string>
+    <string name="create_account">Create Account</string>
 
 
 </resources>

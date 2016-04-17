@@ -29,7 +29,8 @@ public class SignupActivity extends AppCompatActivity {
     @Bind(R.id.input_email) EditText _emailText;
     @Bind(R.id.input_password1) EditText _passwordText1;
     @Bind(R.id.input_password2) EditText _passwordText2;
-    @Bind(R.id.btn_signup) Button _signupButton;
+    //@Bind(R.id.btn_signup) Button _signupButton;
+    Button _signupButton;
     @Bind(R.id.link_login) TextView _loginLink;
 
     UserService userService;
@@ -42,6 +43,8 @@ public class SignupActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         userService = new UserService();
+
+        _signupButton = (Button) findViewById(R.id.btn_signup);
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
