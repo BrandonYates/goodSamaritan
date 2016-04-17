@@ -98,51 +98,51 @@ public class LoginActivity extends AppCompatActivity {
                         params.add("password", password);
                         try {
 
-                            client.post("http://10.0.2.2:8080/authenticate", params, new AsyncHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                System.out.println("##############");
-                                System.out.println("onSuccess");
-                                System.out.println(responseBody);
-                                try {
-                                    if (responseBody == null) {
-                                        System.out.println("# responseBody Null");
-                                        throw new Exception();
-                                    }
-                                    String response = new String(responseBody, "UTF-8");
-                                    // JSON Object
-                                    JSONObject obj = new JSONObject(response);
-
-                                    System.out.println(obj.toString());
-
-                                    String userId = obj.getString("id");
-                                    System.out.println("userId is " + userId);
-                                    onLoginSuccess(userId);
+                            RestUtils.post("authenticate", params, new AsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                     System.out.println("##############");
+                                    System.out.println("onSuccess");
+                                    System.out.println(responseBody);
+                                    try {
+                                        if (responseBody == null) {
+                                            System.out.println("# responseBody Null");
+                                            throw new Exception();
+                                        }
+                                        String response = new String(responseBody, "UTF-8");
+                                        // JSON Object
+                                        JSONObject obj = new JSONObject(response);
 
-                                } catch (Exception e) {
-                                    // TODO Auto-generated catch block
-                                    System.out.println("EXCEPTION!");
-                                    System.out.println("EXCEPTION!");
-                                    System.out.println("EXCEPTION!");
-                                    System.out.println("EXCEPTION!");
-                                    e.printStackTrace();
-                                    onLoginFailed();
-                                }
+                                        System.out.println(obj.toString());
+
+                                        String userId = obj.getString("id");
+                                        System.out.println("userId is " + userId);
+                                        onLoginSuccess(userId);
+                                        System.out.println("##############");
+
+                                    } catch (Exception e) {
+                                        // TODO Auto-generated catch block
+                                        System.out.println("EXCEPTION!");
+                                        System.out.println("EXCEPTION!");
+                                        System.out.println("EXCEPTION!");
+                                        System.out.println("EXCEPTION!");
+                                        e.printStackTrace();
+                                        onLoginFailed();
+                                    }
 //                                onLoginSuccess();
 //                                System.out.println("##############");
-                            }
-
-                            @Override
-                            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                try {
-                                    String response = new String(responseBody, "UTF-8");
-                                    System.out.println(statusCode + ": " + response);
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                        });
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                    try {
+                                        String response = new String(responseBody, "UTF-8");
+                                        System.out.println(statusCode + ": " + response);
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
 //                            userService.signIn(email, password);
 //                            onLoginSuccess();
                         } catch (Exception e) {
