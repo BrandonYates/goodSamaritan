@@ -19,7 +19,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -85,56 +84,55 @@ public class LoginActivity extends AppCompatActivity {
         final String email = _emailText.getText().toString();
         final String password = _passwordText.getText().toString();
 
+        userService.hello();
         Toast.makeText(getBaseContext(), "Login attempted", Toast.LENGTH_LONG).show();
 
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-//
+//                         On complete call either onLoginSuccess or onLoginFailed
 
+                        AsyncHttpClient client = new AsyncHttpClient();
                         RequestParams params = new RequestParams();
-
                         params.add("emailAddress", email);
                         params.add("password", password);
+                        try {
 
-                        RestUtils.post("authenticate", params, new AsyncHttpResponseHandler() {
-
+                            client.post("http://10.0.2.2:8080/authenticate", params, new AsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 System.out.println("##############");
                                 System.out.println("onSuccess");
-//                                System.out.println("statusCode: " + statusCode);
-//                                System.out.println("headers: " + headers.toString());
+                                System.out.println(responseBody);
                                 try {
-
+                                    if (responseBody == null) {
+                                        System.out.println("# responseBody Null");
+                                        throw new Exception();
+                                    }
                                     String response = new String(responseBody, "UTF-8");
-//                                    System.out.println("response: " + response);
-
                                     // JSON Object
                                     JSONObject obj = new JSONObject(response);
 
-                                    System.out.println("# status : " + obj.getInt("status"));
-                                    if(obj.getInt("status") == 200) {
-                                        onLoginSuccess();
-                                    } else {
-                                        System.out.println("##############");
-                                        System.out.println("# error : " + obj.getInt("status"));
-                                        System.out.println("##############");
-                                        onLoginFailed();
-                                    }
-
                                     System.out.println(obj.toString());
+
+                                    onLoginSuccess();
+                                    System.out.println("##############");
 
                                 } catch (Exception e) {
                                     // TODO Auto-generated catch block
+                                    System.out.println("EXCEPTION!");
+                                    System.out.println("EXCEPTION!");
+                                    System.out.println("EXCEPTION!");
+                                    System.out.println("EXCEPTION!");
                                     e.printStackTrace();
+                                    onLoginFailed();
                                 }
-                                System.out.println("##############");
+//                                onLoginSuccess();
+//                                System.out.println("##############");
                             }
 
                             @Override
                             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                onLoginFailed();
                                 try {
                                     String response = new String(responseBody, "UTF-8");
                                     System.out.println(statusCode + ": " + response);
@@ -143,12 +141,18 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                             }
                         });
+//                            userService.signIn(email, password);
+//                            onLoginSuccess();
+                        } catch (Exception e) {
+                            System.out.println(e.getMessage());
+                            onLoginFailed();
+                            e.printStackTrace();
+                        }
 
                         progressDialog.dismiss();
                     }
                 }, 3000);
         progressDialog.dismiss();
-
     }
 
     @Override

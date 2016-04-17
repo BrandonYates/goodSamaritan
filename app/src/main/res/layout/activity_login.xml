@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:background="@drawable/main_screen"
     android:id="@+id/linLayout1"
     android:weightSum="1">
@@ -11,10 +12,7 @@
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingTop="56dp"
-    android:paddingLeft="24dp"
-    android:paddingRight="24dp">
+    android:layout_height="wrap_content">
 
     <ImageView android:src="@drawable/gd_logo"
         android:layout_width="wrap_content"
@@ -57,8 +55,6 @@
         android:id="@+id/btn_login"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
         android:padding="12dp"
         android:text="Login"/>
 
