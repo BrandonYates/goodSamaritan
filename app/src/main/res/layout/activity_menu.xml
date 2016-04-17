@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/blue"
+    android:id="@+id/linLayout1"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_weight=".1"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:id="@+id/detailsPageTitle"
+        android:text="@string/menuPageTitle"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight=".2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/linLayout2"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".50"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:id="@+id/userText"
+            android:text="@string/userText"
+            android:textColor="#ffffff" />
+
+
+        <ImageView
+            android:id="@+id/hearLogo"
+            android:layout_gravity="center"
+            android:background="@drawable/heart"
+            android:layout_width="0dp"
+            android:layout_weight=".10"
+            android:layout_height="30dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight=".40"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:id="@+id/myPointsText"
+            android:text="@string/myPointsText"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_weight=".1"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:id="@+id/myDeeds"
+        android:text="@string/myDeeds"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#ffffff" />
+
+
+    <ListView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight=".5"
+        android:id="@+id/myDeedList"
+        android:background="#3D3D3D" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_weight=".1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/linLayout6"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/returnButton"
+            android:text="@string/returnButtonText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".50"
+            android:onClick="gotoMenu"/>
+
+        <Button
+            android:id="@+id/logoutButton"
+            android:text="@string/logoutButtonText"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".50"
+            android:onClick="gotoMenu"/>
+
+    </LinearLayout>
+
+</LinearLayout>
+
