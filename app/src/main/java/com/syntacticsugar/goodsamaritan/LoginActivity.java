@@ -115,6 +115,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                     System.out.println(obj.toString());
 
+                                    onLoginSuccess();
+                                    System.out.println("##############");
+
                                 } catch (Exception e) {
                                     // TODO Auto-generated catch block
                                     System.out.println("EXCEPTION!");
@@ -124,8 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                                     e.printStackTrace();
                                     onLoginFailed();
                                 }
-                                onLoginSuccess();
-                                System.out.println("##############");
+//                                onLoginSuccess();
+//                                System.out.println("##############");
                             }
 
                             @Override
