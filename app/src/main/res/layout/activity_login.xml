@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="fill_parent"
-android:fitsSystemWindows="true"
-    android:background="#1e7ea9">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_screen"
+    android:id="@+id/linLayout1"
+    android:weightSum="1">
 
 <LinearLayout
     android:orientation="vertical"
@@ -71,4 +74,4 @@ android:fitsSystemWindows="true"
         android:textColorHighlight="#000000" />
 
 </LinearLayout>
-</ScrollView>
+</LinearLayout>
