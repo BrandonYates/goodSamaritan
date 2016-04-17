@@ -115,7 +115,10 @@ public class LoginActivity extends AppCompatActivity {
 
                                     System.out.println(obj.toString());
 
-                                    String userId = obj.getString("id");
+                                    JSONObject contextObj = obj.getJSONObject("context");
+                                    JSONObject entityObj = contextObj.getJSONObject("entity");
+
+                                    String userId = entityObj.getString("id");
                                     System.out.println("userId is " + userId);
                                     onLoginSuccess(userId);
                                     System.out.println("##############");
