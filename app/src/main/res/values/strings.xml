@@ -10,7 +10,7 @@
     <string name="confirm_password">Confirm Password</string>
 
     <string name="myPointsTitleText">My Good Deed Points</string>
-    <string name="myPointsText">+ 12</string>
+    <string name="myPointsText">+ 999</string>
     <string name="menuButtonText">Menu</string>
     <string name="detailsPageTitle">Good Deed Details</string>
     <string name="postedByText">Posted By</string>
@@ -24,6 +24,9 @@
     <string name="acceptButtonText">Accept</string>
     <string name="declineButtonText">Decline</string>
     <string name="create_account">Create Account</string>
-
+    <string name="menuPageTitle">Account Menu</string>
+    <string name="returnButtonText">Return to Main</string>
+    <string name="logoutButtonText">Logout</string>
+    <string name="myDeeds">My Deeds</string>
 
 </resources>

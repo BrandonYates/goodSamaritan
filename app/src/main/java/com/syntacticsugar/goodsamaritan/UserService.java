@@ -43,10 +43,7 @@ public class UserService {
                 System.out.println("##############");
                 System.out.println("onSuccess");
                 try {
-                    if (responseBody == null) {
-                        System.out.println("# responseBody Null");
-                        throw new Exception();
-                    }
+
                     String response = new String(responseBody, "UTF-8");
 
                     // JSON Object

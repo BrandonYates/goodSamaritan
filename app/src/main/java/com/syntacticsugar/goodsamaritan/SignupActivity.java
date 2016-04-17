@@ -16,10 +16,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
 
 public class SignupActivity extends AppCompatActivity {
     private static final String TAG = "SignupActivity";
@@ -87,17 +94,62 @@ public class SignupActivity extends AppCompatActivity {
         boolean b = new Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        // On complete call either onLoginSuccess or onLoginFailed
-
                         try {
-                            userService.createUser(firstName, lastName, email, password1);
-                        } catch (JSONException e) {
+                            RequestParams params = new RequestParams();
+                            params.add("firstName", firstName);
+                            params.add("lastName", lastName);
+                            params.add("emailAddress", email);
+                            params.add("password", password1);
+
+                            RestUtils.post("createUser/params", params, new AsyncHttpResponseHandler() {
+
+                                @Override
+                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                                    System.out.println("##############");
+                                    System.out.println("onSuccess");
+                                    try {
+
+                                        String response = new String(responseBody, "UTF-8");
+
+                                        // JSON Object
+                                        JSONObject obj = new JSONObject(response);
+
+                                        System.out.println("statusCode: " + statusCode);
+                                        System.out.println(obj.toString());
+
+                                        if(statusCode == 200) {
+                                            onSignupSuccess();
+                                        } else {
+                                            onSignupFailed();
+                                        }
+
+                                        System.out.println(obj.toString());
+
+                                    } catch (Exception e) {
+                                        // TODO Auto-generated catch block
+                                        System.out.println("EXCEPTION!");
+                                        e.printStackTrace();
+                                    }
+                                    System.out.println("##############");
+                                }
+
+                                @Override
+                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                                    try {
+                                        String response = new String(responseBody, "UTF-8");
+//                                        System.out.println(statusCode + ": " + response);
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
+                        } catch (Exception e) {
                             System.out.println(e.getMessage());
+                            onSignupFailed();
                             e.printStackTrace();
                         }
 
-                        onSignupSuccess();
-                        onSignupFailed();
                         progressDialog.dismiss();
                     }
                 }, 3000);
