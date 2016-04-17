@@ -19,7 +19,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
@@ -104,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                 System.out.println("##############");
                                 System.out.println("onSuccess");
+                                System.out.println(responseBody);
                                 try {
                                     if (responseBody == null) {
                                         System.out.println("# responseBody Null");
