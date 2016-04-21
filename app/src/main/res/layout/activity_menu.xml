@@ -96,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".50"
-            android:onClick="gotoMenu"/>
+            android:onClick="gotoMain"/>
 
         <Button
             android:id="@+id/logoutButton"
@@ -104,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".50"
-            android:onClick="gotoMenu"/>
+            android:onClick="logout"/>
 
     </LinearLayout>
 

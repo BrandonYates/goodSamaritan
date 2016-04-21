@@ -8,9 +8,15 @@ import com.loopj.android.http.RequestParams;
  * Created by brandonyates on 4/5/16.
  */
 public class RestUtils {
+
+    //Brandon LocalHost
+//    private static final String BASE_URL = "http://192.168.2.7:8080/";
+
+    //Android LocalHost
 //    private static final String BASE_URL = "http://10.0.2.2:8080/";
 
-    private static final String BASE_URL = "http://130.211.174.74:8080";
+    //Production Server
+    private static final String BASE_URL = "http://130.211.174.74:8080/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
 

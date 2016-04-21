@@ -4,7 +4,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +20,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class UserService {
 
+    OnJSONResponseCallback callback = new OnJSONResponseCallback();
     //parameterized user Constructor
     public void createUser(String firstName, String lastName, String emailAddress, String password) throws JSONException {
 
@@ -124,6 +124,31 @@ public class UserService {
 
     }
 
+    public JSONObject findUserById (String userId) throws JSONException {
+        RequestParams params = new RequestParams();
+
+        params.add("id", userId);
+
+        RestUtils.get("findUserById", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                // If the response is JSONObject instead of expected JSONArray
+                System.out.println(response.toString());
+
+                callback.onJSONResponse(true, response);
+//                String response = new String(responseBody, "UTF-8");
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                System.out.println(timeline.toString());
+            }
+        });
+
+        return callback.getObject();
+    }
+
     public void findUserByEmail (String emailAddress) throws JSONException {
         RequestParams params = new RequestParams();
 
@@ -158,4 +183,9 @@ public class UserService {
             }
         });
     }
+
+//    public User objectToUser (JSONObject object) {
+//
+//        return new User();
+//    }
 }

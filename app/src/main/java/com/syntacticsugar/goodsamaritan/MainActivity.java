@@ -1,20 +1,16 @@
 package com.syntacticsugar.goodsamaritan;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import android.widget.TextView;
-import android.graphics.Typeface;
-
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,7 +24,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final int REQUEST_MAIN = 1;
     ListView listView;
+    String userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         myPoints.setTypeface(font);
         //end set custom font
 
-        String userInfo = getIntent().getStringExtra("userId");
+        userInfo = getIntent().getStringExtra("userId");
         System.out.println("user info is " + userInfo);
 
         //listview
@@ -138,5 +136,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     public void gotoMenu(View view) {
         System.out.println("gotoMenu Called!");
+
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        intent.putExtra("userId", userInfo);
+        startActivityForResult(intent, REQUEST_MAIN);
     }
 }
