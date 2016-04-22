@@ -4,7 +4,6 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +20,7 @@ import cz.msebera.android.httpclient.Header;
  */
 public class UserService {
 
+    OnJSONResponseCallback callback = new OnJSONResponseCallback();
     //parameterized user Constructor
     public void createUser(String firstName, String lastName, String emailAddress, String password) throws JSONException {
 
@@ -42,11 +42,9 @@ public class UserService {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 System.out.println("##############");
                 System.out.println("onSuccess");
+
                 try {
-                    if (responseBody == null) {
-                        System.out.println("# responseBody Null");
-                        throw new Exception();
-                    }
+
                     String response = new String(responseBody, "UTF-8");
 
                     // JSON Object
@@ -127,6 +125,36 @@ public class UserService {
 
     }
 
+    public JSONObject findUserById (String userId) throws JSONException {
+        RequestParams params = new RequestParams();
+
+        System.out.println("FINDING USER BY ID");
+        params.add("id", userId);
+
+        RestUtils.get("findUserById", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                System.out.println("JSONObject!");
+                System.out.println(response.toString());
+
+                //save object for returning
+                callback.onJSONResponse(true, response);
+
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+
+                System.out.println("JSONAarray");
+                // If the response is JSONArray instead of expected JSONObject
+                System.out.println(timeline.toString());
+            }
+        });
+
+        return callback.getObject();
+    }
+
     public void findUserByEmail (String emailAddress) throws JSONException {
         RequestParams params = new RequestParams();
 
@@ -148,7 +176,7 @@ public class UserService {
 
     public void hello () {
 
-        RestUtils.get("hello", null, new JsonHttpResponseHandler() {
+        RestUtils.get("/hello", null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 // If the response is JSONObject instead of expected JSONArray
@@ -161,4 +189,5 @@ public class UserService {
             }
         });
     }
+
 }

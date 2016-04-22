@@ -1,71 +1,98 @@
 package com.syntacticsugar.goodsamaritan;
 
 import android.content.Intent;
+
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.UnsupportedEncodingException;
-
 import cz.msebera.android.httpclient.Header;
+import android.widget.Toast;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.Collection;
 
-
+/**
+ * Created by brandonyates on 4/21/16.
+ */
 public class MenuActivity extends AppCompatActivity {
 
     private static final int REQUEST_MAIN = 1;
     ListView listView;
-    String userId;
+    String userInfo;
     JSONArray deeds;
     String[] deedTitles;
 
+    private UserService userService = new UserService();
+    OnJSONResponseCallback callback = new OnJSONResponseCallback();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        //set custom font
-        TextView menuPageTitle = (TextView) findViewById(R.id.menuPageTitle);
-        TextView userText = (TextView) findViewById(R.id.userText);
-        TextView myPointsText = (TextView) findViewById(R.id.myPointsText);
-        TextView myDeedsText = (TextView) findViewById(R.id.myDeedsText);
-        Typeface font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
-        menuPageTitle.setTypeface(font);
-        userText.setTypeface(font);
-        myPointsText.setTypeface(font);
-        myDeedsText.setTypeface(font);
-        //end set custom font
 
-        userId = getIntent().getStringExtra("userId");
-        System.out.println("user info is " + userId);
-        getMyDeeds(userId);
+
+        userInfo = getIntent().getStringExtra("userId");
+        System.out.println("user info is " + userInfo);
 
         //listview
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.myDeedList);
 
-        // Defined Array values to show in ListView
-        deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if(userService != null && userInfo != null) {
+                            try {
+                                JSONObject rawUser = userService.findUserById(userInfo);
 
-        // Define a new Adapter
-        // First parameter - Context
-        // Second parameter - Layout for the row
-        // Third parameter - ID of the TextView to which the data is written
-        // Fourth - the Array of data
+                                if(rawUser != null) {
+                                    System.out.println("rawUser " + rawUser.toString());
+                                    callback.onJSONResponse(true, rawUser);
+                                    User user = new User(callback.getObject());
+                                    Collection<Deed> deeds = user.getDeeds();
+                                    String[] deedTitles = new String[deeds.size()];
+
+                                    for(int i = 0; i < deeds.size(); ++i) {
+                                        Deed deed = (Deed)deeds.toArray()[i];
+                                        deedTitles[i] = deed.getDescription();
+                                    }
+                                }
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else if(userService == null) {
+                            System.out.println("User Service null");
+                        }
+                        else if (userInfo == null) {
+                            System.out.println("UserInfo null");
+                        }
+                    }
+                }, 3000);
+
+        // Defined Array values to show in ListView
+        String[] deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
+
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1, android.R.id.text1, deedTitles);
@@ -81,21 +108,20 @@ public class MenuActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // ListView Clicked item index
-                int itemPosition     = position;
+                int itemPosition = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                String itemValue = (String) listView.getItemAtPosition(position);
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),
-                        "Position :"+itemPosition+"  ListItem : " +itemValue , Toast.LENGTH_LONG)
+                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
                         .show();
 
             }
 
         });
         // end of listview code
-
     }
 
 
@@ -120,15 +146,6 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void gotoMain(View view) {
-
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        intent.putExtra("userId", userId);
-        startActivityForResult(intent, REQUEST_MAIN );
-
-        System.out.println("gotoMain Called!");
     }
 
     public void gotoLogout(View view) {
@@ -217,4 +234,16 @@ public class MenuActivity extends AppCompatActivity {
        return deeds;
     }
 
+    public void gotoMain(View view) {
+        System.out.println("gotoMenu Called!");
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("userId", userInfo);
+        startActivityForResult(intent, REQUEST_MAIN);
+    }
+
+    public void logout(View view) {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivityForResult(intent, REQUEST_MAIN);
+    }
 }
