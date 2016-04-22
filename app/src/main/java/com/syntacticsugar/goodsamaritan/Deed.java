@@ -22,7 +22,6 @@ public class Deed {
     private Location location = new Location();
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private boolean active;
-
     private int pointValue;
 
     public Deed() {};
@@ -66,4 +65,23 @@ public class Deed {
 
     public void setPointValue(int pointValue) { this.pointValue = pointValue; }
 
+    public String getDescription() { return description; }
+
+    public void setDescription(String description) { this.description = description; }
+
+    public String getRequestingUserId() { return requestingUserId; }
+
+    public void setRequestingUserId(String requestingUserId) { this.requestingUserId = requestingUserId; }
+
+    public Set<String> getClaimedUserIds() { return claimedUserIds; }
+
+    public void setClaimedUserIds(Set<String> claimedUserIds) { this.claimedUserIds = claimedUserIds; }
+
+    public boolean isActive() { return active; }
+
+    public void setActive(boolean active) { this.active = active; }
+
+    public Location getLocation() { return location; }
+
+    public void setLocation(Location location) { this.location = location; }
 }

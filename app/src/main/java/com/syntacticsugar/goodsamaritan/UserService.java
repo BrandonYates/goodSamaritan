@@ -42,6 +42,7 @@ public class UserService {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 System.out.println("##############");
                 System.out.println("onSuccess");
+
                 try {
 
                     String response = new String(responseBody, "UTF-8");
@@ -127,12 +128,14 @@ public class UserService {
     public JSONObject findUserById (String userId) throws JSONException {
         RequestParams params = new RequestParams();
 
+        System.out.println("FINDING USER BY ID");
         params.add("id", userId);
 
         RestUtils.get("findUserById", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
+                System.out.println("JSONObject!");
                 System.out.println(response.toString());
 
                 //save object for returning
@@ -142,12 +145,13 @@ public class UserService {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+
+                System.out.println("JSONAarray");
                 // If the response is JSONArray instead of expected JSONObject
                 System.out.println(timeline.toString());
             }
         });
 
-        //return object
         return callback.getObject();
     }
 

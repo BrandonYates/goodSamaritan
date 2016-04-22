@@ -12,6 +12,8 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collection;
+
 /**
  * Created by brandonyates on 4/21/16.
  */
@@ -20,7 +22,8 @@ public class MenuActivity extends AppCompatActivity {
     private static final int REQUEST_MAIN = 1;
     ListView listView;
     String userInfo;
-    private UserService userService;
+    private UserService userService = new UserService();
+    OnJSONResponseCallback callback = new OnJSONResponseCallback();
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -36,16 +39,42 @@ public class MenuActivity extends AppCompatActivity {
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.myDeedList);
 
-        try {
-            JSONObject user = userService.findUserById(userInfo);
-        }
-        catch (JSONException e) {
-            e.printStackTrace();
-        }
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if(userService != null && userInfo != null) {
+                            try {
+                                JSONObject rawUser = userService.findUserById(userInfo);
+
+                                if(rawUser != null) {
+                                    System.out.println("rawUser " + rawUser.toString());
+                                    callback.onJSONResponse(true, rawUser);
+                                    User user = new User(callback.getObject());
+                                    Collection<Deed> deeds = user.getDeeds();
+                                    String[] deedTitles = new String[deeds.size()];
+
+                                    for(int i = 0; i < deeds.size(); ++i) {
+                                        Deed deed = (Deed)deeds.toArray()[i];
+                                        deedTitles[i] = deed.getDescription();
+                                    }
+                                }
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else if(userService == null) {
+                            System.out.println("User Service null");
+                        }
+                        else if (userInfo == null) {
+                            System.out.println("UserInfo null");
+                        }
+                    }
+                }, 3000);
 
         // Defined Array values to show in ListView
         String[] deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
-
 
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -62,10 +91,10 @@ public class MenuActivity extends AppCompatActivity {
                                     int position, long id) {
 
                 // ListView Clicked item index
-                int itemPosition     = position;
+                int itemPosition = position;
 
                 // ListView Clicked item value
-                String  itemValue    = (String) listView.getItemAtPosition(position);
+                String itemValue = (String) listView.getItemAtPosition(position);
 
                 // Show Alert
                 Toast.makeText(getApplicationContext(),

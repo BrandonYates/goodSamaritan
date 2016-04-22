@@ -52,5 +52,8 @@ public class User {
         }
     }
 
+    public Collection<Deed> getDeeds() { return deeds; }
+
+    public void setDeeds(Collection<Deed> deeds) { this.deeds = deeds;}
 
 }
