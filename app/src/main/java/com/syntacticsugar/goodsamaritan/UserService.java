@@ -132,20 +132,22 @@ public class UserService {
         RestUtils.get("findUserById", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // If the response is JSONObject instead of expected JSONArray
+
                 System.out.println(response.toString());
 
+                //save object for returning
                 callback.onJSONResponse(true, response);
-//                String response = new String(responseBody, "UTF-8");
 
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
+                // If the response is JSONArray instead of expected JSONObject
                 System.out.println(timeline.toString());
             }
         });
 
+        //return object
         return callback.getObject();
     }
 
@@ -184,8 +186,4 @@ public class UserService {
         });
     }
 
-//    public User objectToUser (JSONObject object) {
-//
-//        return new User();
-//    }
 }

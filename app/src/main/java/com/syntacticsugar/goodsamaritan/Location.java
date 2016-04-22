@@ -1,5 +1,8 @@
 package com.syntacticsugar.goodsamaritan;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by brandonyates on 4/21/16.
  */
@@ -14,6 +17,12 @@ public class Location {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public Location (JSONObject rawLocation) throws JSONException{
+        this.id = (String)rawLocation.get("id");
+        this.latitude = (double)rawLocation.get("latitude");
+        this.longitude = (double)rawLocation.get("longitude");
     }
 
     public String getId() { return id; } // get id

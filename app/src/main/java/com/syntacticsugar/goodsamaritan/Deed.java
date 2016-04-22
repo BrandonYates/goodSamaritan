@@ -1,5 +1,8 @@
 package com.syntacticsugar.goodsamaritan;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -19,6 +22,7 @@ public class Deed {
     private Location location = new Location();
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
     private boolean active;
+
     private int pointValue;
 
     public Deed() {};
@@ -46,4 +50,20 @@ public class Deed {
 //
 //        this.pointValue = points;
 //    };
+
+    public Deed(JSONObject rawDeed) throws JSONException{
+
+        this.id = (String)rawDeed.get("id");
+        this.description = (String)rawDeed.get("description");
+        this.date = (Date)rawDeed.get("date");
+        this.requestingUserId = (String)rawDeed.get("requestingUserId");
+        this.location = new Location((JSONObject)rawDeed.get("location"));
+        this.active = (boolean)rawDeed.get("active");
+        this.pointValue = (int)rawDeed.get("pointValue");
+    }
+
+    public int getPointValue() { return pointValue; }
+
+    public void setPointValue(int pointValue) { this.pointValue = pointValue; }
+
 }
