@@ -14,9 +14,9 @@
         android:layout_weight=".1"
         android:layout_height="0dp"
         android:gravity="center"
-        android:id="@+id/detailsPageTitle"
+        android:id="@+id/menuPageTitle"
         android:text="@string/menuPageTitle"
-        android:textSize="20sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:textColor="#ffffff" />
 
@@ -34,7 +34,7 @@
             android:layout_weight=".50"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:id="@+id/userText"
             android:text="@string/userText"
@@ -57,7 +57,7 @@
             android:gravity="center_vertical"
             android:id="@+id/myPointsText"
             android:text="@string/myPointsText"
-            android:textSize="30sp"
+            android:textSize="40sp"
             android:textStyle="bold"
             android:textColor="#ffffff" />
     </LinearLayout>
@@ -67,9 +67,9 @@
         android:layout_weight=".1"
         android:layout_height="0dp"
         android:gravity="center"
-        android:id="@+id/myDeeds"
-        android:text="@string/myDeeds"
-        android:textSize="20sp"
+        android:id="@+id/myDeedsText"
+        android:text="@string/myDeedsText"
+        android:textSize="40sp"
         android:textStyle="bold"
         android:textColor="#ffffff" />
 
@@ -96,7 +96,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".50"
-            android:onClick="gotoMenu"/>
+            android:onClick="gotoMain"/>
 
         <Button
             android:id="@+id/logoutButton"
@@ -104,7 +104,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".50"
-            android:onClick="gotoMenu"/>
+            android:onClick="gotoLogout"/>
 
     </LinearLayout>
 

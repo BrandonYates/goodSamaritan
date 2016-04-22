@@ -27,6 +27,6 @@
     <string name="menuPageTitle">Account Menu</string>
     <string name="returnButtonText">Return to Main</string>
     <string name="logoutButtonText">Logout</string>
-    <string name="myDeeds">My Deeds</string>
+    <string name="myDeedsText">My Deeds</string>
 
 </resources>

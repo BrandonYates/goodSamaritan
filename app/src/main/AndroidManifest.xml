@@ -36,6 +36,7 @@
         </activity>
         <activity android:name="com.syntacticsugar.goodsamaritan.MainActivity" android:theme="@style/AppTheme.Dark" />
         <activity android:name="com.syntacticsugar.goodsamaritan.SignupActivity" android:theme="@style/AppTheme.Dark" />
+        <activity android:name="com.syntacticsugar.goodsamaritan.MenuActivity" android:theme="@style/AppTheme.Dark" />
 
         <meta-data
             android:name="com.google.android.gms.version"
