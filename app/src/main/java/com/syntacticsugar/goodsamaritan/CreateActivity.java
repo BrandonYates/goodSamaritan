@@ -1,6 +1,7 @@
 package com.syntacticsugar.goodsamaritan;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -26,8 +28,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
-import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 
@@ -50,7 +50,7 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
     EditText _deedDesc;
     @Bind(R.id.deedPoints)
     NumberPicker _deedPoints;
-    int deedPointsValue;
+    int deedPointsValue = 1;
     Button _createButton;
 
 
@@ -72,6 +72,12 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
 
         setContentView(R.layout.activity_create);
         ButterKnife.bind(this);
+
+        //set custom font
+        TextView deedPointsTitle = (TextView) findViewById(R.id.deedPointsTitle);
+        Typeface font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
+        deedPointsTitle.setTypeface(font);
+        //end set custom font
 
 
         // map stuff
@@ -196,6 +202,7 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
                                 params.add("uid", userInfo);
                                 params.add("latitude", Double.toString(deedLat));
                                 params.add("longitude", Double.toString(deedLong));
+                                params.add("pointvalue", Integer.toString(deedPointsValue));
 
 
                                 RestUtils.post("createDeed/params", params, new AsyncHttpResponseHandler() {
@@ -204,27 +211,21 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
                                     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                                         System.out.println("***** create deed in the back onSuccess");
                                         try {
-
+                                            System.out.println("***** create deed in the back onSuccess try start");
                                             String response = new String(responseBody, "UTF-8");
-
-                                            // JSON Object
-                                            JSONObject obj = new JSONObject(response);
-
-                                            System.out.println("statusCode: " + statusCode);
-                                            System.out.println(obj.toString());
 
                                             if(statusCode == 200) {
                                                // status okay
+                                                Toast.makeText(getBaseContext(), "Create Deed Success!", Toast.LENGTH_LONG).show();
                                             } else {
                                               // status failed
+                                                Toast.makeText(getBaseContext(), "!!!!Create Deed FAILED!!!!", Toast.LENGTH_LONG).show();
                                             }
-                                            System.out.println(obj.toString());
-
                                             // go back to menu
                                             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                                             intent.putExtra("userId", userInfo);
                                             startActivityForResult(intent, REQUEST_MENU);
-
+                                            System.out.println("***** create deed in the back onSuccess try end");
                                         } catch (Exception e) {
                                             // TODO Auto-generated catch block
                                             System.out.println(" ******* EXCEPTION!");
