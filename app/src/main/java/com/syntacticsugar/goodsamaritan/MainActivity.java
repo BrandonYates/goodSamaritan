@@ -17,6 +17,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Collection;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private static final int REQUEST_MENU = 1;
     //ListView listView;
     String userInfo;
+    private UserService userService = new UserService();
+    OnJSONResponseCallback callback = new OnJSONResponseCallback();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +45,42 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //end set custom font
 
         userInfo = getIntent().getStringExtra("userId");
-        System.out.println(" ***** user info is " + userInfo);
+
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        if(userService != null && userInfo != null) {
+                            try {
+                                JSONObject rawUser = userService.findUserById(userInfo);
+
+                                if(rawUser != null) {
+                                    callback.onJSONResponse(true, rawUser);
+                                    User user = new User(callback.getObject());
+
+                                    System.out.println("User: " + user.toString());
+                                    Collection<Deed> deeds = user.getDeeds();
+                                    String[] deedTitles = new String[deeds.size()];
+
+                                    for(int i = 0; i < deeds.size(); ++i) {
+                                        Deed deed = (Deed)deeds.toArray()[i];
+                                        deedTitles[i] = deed.getDescription();
+                                    }
+                                }
+
+                            }
+                            catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else if(userService == null) {
+                            System.out.println("User Service null");
+                        }
+                        else if (userInfo == null) {
+                            System.out.println("UserInfo null");
+                        }
+                    }
+                }, 3000);
+
 
         //listview
         // Get ListView object from xml

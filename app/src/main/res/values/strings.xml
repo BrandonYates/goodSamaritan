@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Good Samaritan</string>
 
+    //login and user interaction strings
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="first_name">First Name</string>
@@ -11,22 +12,36 @@
 
     <string name="myPointsTitleText">My Good Deed Points</string>
     <string name="myPointsText">+ 999</string>
-    <string name="menuButtonText">Menu</string>
     <string name="detailsPageTitle">Good Deed Details</string>
     <string name="postedByText">Posted By</string>
+
+    //details strings
     <string name="userText">SomeUser</string>
+    <string name="createDetailsTitleText">Create a Deed</string>
     <string name="detailsTitleText">Troubled Youth</string>
     <string name="detailText">There are some troubled youth hanging out asdfjka sdflj asdflkjasdfljasdlfkjasdf asdf laksdfj alsdkjf lasdjf lasdjf lasdjf laksjdf lkajsdfljasdlfkj asdf ds f asdf a sdf a sd</string>
     <string name="addressText">123 anywhere st</string>
     <string name="address2Text">Anytown, Fl 32407</string>
     <string name="emailText">user@email.com</string>
     <string name="availablePointsText">+ 4 Good Deed Points</string>
+
+    //deed creation
+    <string name="myDeeds">My Deeds</string>
+    <string name="deedDescription">Description</string>
+    <string name="goodDeedPoints">Good Deed Points</string>
+    <string name="expirationDate">Expiration date</string>
+    <string name="deedLocation">Mark Deed Location</string>
+
+
+    //button title strings
+    <string name="menuButtonText">Menu</string>
     <string name="acceptButtonText">Accept</string>
     <string name="declineButtonText">Decline</string>
     <string name="create_account">Create Account</string>
     <string name="menuPageTitle">Account Menu</string>
     <string name="returnButtonText">Return to Main</string>
     <string name="logoutButtonText">Logout</string>
+    <string name="cancelButtonText">Cancel</string>
     <string name="createButtonText">Create A New Deed</string>
     <string name="myDeedsText">My Deeds</string>
     <string name="deedPoints">Deed Points</string>
