@@ -119,9 +119,9 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
         CameraPosition INIT =
                 new CameraPosition.Builder()
                         .target(startPos)
-                        .zoom(17.5F)
-                        .bearing(300F) // orientation
-                        .tilt( 50F) // viewing angle
+                        .zoom(15F)
+                        .bearing(0F) // orientation
+//                        .tilt( 50F) // viewing angle
                         .build();
 
         // use map to move camera into position
@@ -152,7 +152,7 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     public void createDeed(View view) {
-        //     ^^^^ need to see if this is returning a success or not
+        // ^^^^ need to see if this is returning a success or not
 
         if(validateDeed()) {
             // save deed
@@ -218,8 +218,12 @@ public class CreateActivity extends AppCompatActivity implements OnMapReadyCallb
                                             } else {
                                               // status failed
                                             }
-
                                             System.out.println(obj.toString());
+
+                                            // go back to menu
+                                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                                            intent.putExtra("userId", userInfo);
+                                            startActivityForResult(intent, REQUEST_MENU);
 
                                         } catch (Exception e) {
                                             // TODO Auto-generated catch block
