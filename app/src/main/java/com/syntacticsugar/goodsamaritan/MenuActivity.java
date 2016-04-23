@@ -1,32 +1,30 @@
 package com.syntacticsugar.goodsamaritan;
 
 import android.content.Intent;
-
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
 import org.json.JSONArray;
-import org.json.JSONObject;
-import java.io.UnsupportedEncodingException;
-import cz.msebera.android.httpclient.Header;
-import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by brandonyates on 4/21/16.
@@ -34,6 +32,7 @@ import java.util.Collection;
 public class MenuActivity extends AppCompatActivity {
 
     private static final int REQUEST_MAIN = 1;
+    private static final int REQUEST_DEED = 1;
     ListView listView;
     String userInfo;
     JSONArray deeds;
@@ -47,6 +46,17 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
+        //set custom font
+        TextView menuPageTitle = (TextView) findViewById(R.id.menuPageTitle);
+        TextView userText = (TextView) findViewById(R.id.userText);
+        TextView myPointsText = (TextView) findViewById(R.id.myPointsText);
+        TextView myDeedsText = (TextView) findViewById(R.id.myDeedsText);
+        Typeface font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
+        menuPageTitle.setTypeface(font);
+        userText.setTypeface(font);
+        myPointsText.setTypeface(font);
+        myDeedsText.setTypeface(font);
+        //end set custom font
 
 
         userInfo = getIntent().getStringExtra("userId");
@@ -232,6 +242,14 @@ public class MenuActivity extends AppCompatActivity {
         // end of gettin' da deeds
 
        return deeds;
+    }
+
+    public void createDeed(View view) {
+        System.out.println("create deed Called!");
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.putExtra("userId", userInfo);
+        startActivityForResult(intent, REQUEST_DEED);
     }
 
     public void gotoMain(View view) {
