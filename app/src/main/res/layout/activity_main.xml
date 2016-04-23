@@ -62,7 +62,7 @@
                     android:gravity="center"
                     android:id="@+id/myPointsTitle"
                     android:text="@string/myPointsTitleText"
-                    android:textSize="30sp"
+                    android:textSize="25sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff" />
 
@@ -98,9 +98,10 @@
                         android:gravity="center"
                         android:id="@+id/myPoints"
                         android:text="@string/myPointsText"
-                        android:textSize="50sp"
+                        android:textSize="40sp"
                         android:textStyle="bold"
-                        android:textColor="#ffffffff" />
+                        android:textColor="#ffffffff"
+                        android:textIsSelectable="true" />
                 </LinearLayout>
             </LinearLayout>
 
