@@ -52,13 +52,13 @@ public class Deed {
 
     public Deed(JSONObject rawDeed) throws JSONException{
 
-        this.id = (String)rawDeed.get("id");
-        this.description = (String)rawDeed.get("description");
+        this.id = rawDeed.getString("id");
+        this.description = rawDeed.getString("description");
         this.date = (Date)rawDeed.get("date");
-        this.requestingUserId = (String)rawDeed.get("requestingUserId");
-        this.location = new Location((JSONObject)rawDeed.get("location"));
-        this.active = (boolean)rawDeed.get("active");
-        this.pointValue = (int)rawDeed.get("pointValue");
+        this.requestingUserId = rawDeed.getString("requestingUserId");
+        this.location = new Location(rawDeed.getJSONObject("location"));
+        this.active = rawDeed.getBoolean("active");
+        this.pointValue = rawDeed.getInt("pointValue");
     }
 
     public int getPointValue() { return pointValue; }
