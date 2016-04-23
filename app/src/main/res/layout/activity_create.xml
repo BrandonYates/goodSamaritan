@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/purple"
+    android:id="@+id/linLayout30"
+    android:weightSum="1">
+
+        <ImageView android:src="@drawable/gd_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight=".1"/>
+
+        <!-- Deed Title Label -->
+        <EditText android:id="@+id/deedTitle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:inputType="textCapWords"
+            android:hint="Deed Title"
+            android:textColor="#FFFFFF" />
+
+
+        <!-- Deed Description Label -->
+        <EditText
+            android:id="@+id/deedDesc"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:inputType="number"
+            android:hint="Deed Description"
+            android:textColor="#FFFFFF" />
+
+         <!-- Deed Points Label -->
+        <EditText
+            android:id="@+id/deedPoints"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".1"
+            android:inputType="textCapWords"
+            android:hint="Deed Points"
+            android:textColor="#FFFFFF"
+            android:textIsSelectable="true" />
+
+        <fragment
+            class="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".5"
+            />
+
+
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".15"
+            android:background="@drawable/purple"
+            android:id="@+id/linLayout31"
+            android:weightSum="1">
+                <!-- Buttons -->
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_marginRight="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight=".5"
+                    android:background="#62a9ff"
+                    android:onClick="cancel"
+                    android:text="Cancel"/>
+
+                <Button
+                    android:id="@+id/btn_create"
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight=".5"
+                    android:background="#62a9ff"
+                    android:onClick="createDeed"
+                    android:text="Create Deed"/>
+        </LinearLayout>
+
+
+</LinearLayout>

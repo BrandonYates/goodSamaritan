@@ -247,7 +247,7 @@ public class MenuActivity extends AppCompatActivity {
     public void createDeed(View view) {
         System.out.println("create deed Called!");
 
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getApplicationContext(), CreateActivity.class);
         intent.putExtra("userId", userInfo);
         startActivityForResult(intent, REQUEST_DEED);
     }
