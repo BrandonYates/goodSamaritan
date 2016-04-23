@@ -60,7 +60,7 @@ public class MenuActivity extends AppCompatActivity {
 
 
         userInfo = getIntent().getStringExtra("userId");
-        System.out.println("user info is " + userInfo);
+        System.out.println("********* ****** ***** *************** *********** user info is " + userInfo);
 
         //listview
         // Get ListView object from xml
@@ -253,7 +253,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoMain(View view) {
-        System.out.println("gotoMenu Called!");
+        System.out.println("gotoMain Called!");
+
+        System.out.print(" **** go to main   " + userInfo);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("userId", userInfo);

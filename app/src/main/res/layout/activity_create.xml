@@ -30,28 +30,49 @@
             android:id="@+id/deedDesc"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".1"
-            android:inputType="number"
+            android:layout_weight=".2"
+            android:inputType="textMultiLine"
             android:hint="Deed Description"
             android:textColor="#FFFFFF" />
 
-         <!-- Deed Points Label -->
-        <EditText
-            android:id="@+id/deedPoints"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight=".1"
-            android:inputType="textCapWords"
-            android:hint="Deed Points"
-            android:textColor="#FFFFFF"
-            android:textIsSelectable="true" />
+            android:background="@drawable/purple"
+            android:id="@+id/linLayout32"
+            android:weightSum="1">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight=".7"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:id="@+id/addressText"
+                    android:text="@string/deedPoints"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="#ffffff" />
+
+                 <!-- Deed Points Label -->
+                <NumberPicker
+                    android:id="@+id/deedPoints"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".2"
+                    android:layout_centerInParent="true" />
+
+        </LinearLayout>
 
         <fragment
             class="com.google.android.gms.maps.MapFragment"
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".5"
+            android:layout_weight=".4"
             />
 
 
@@ -64,7 +85,7 @@
             android:layout_height="0dp"
             android:layout_weight=".15"
             android:background="@drawable/purple"
-            android:id="@+id/linLayout31"
+            android:id="@+id/linLayout33"
             android:weightSum="1">
                 <!-- Buttons -->
                 <Button
