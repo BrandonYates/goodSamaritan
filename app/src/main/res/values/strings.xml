@@ -44,5 +44,6 @@
     <string name="cancelButtonText">Cancel</string>
     <string name="createButtonText">Create A New Deed</string>
     <string name="myDeedsText">My Deeds</string>
+    <string name="deedPoints">Deed Points</string>
 
 </resources>

@@ -20,7 +20,7 @@ public class RestUtils {
     private static final String BASE_URL = "http://10.0.2.2:8080/";
 
     //Production Server
-//    private static final String BASE_URL = "http://130.211.174.74:8080/";
+    private static final String BASE_URL = "http://130.211.174.74:8080/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
     private static SyncHttpClient syncclient = new SyncHttpClient();

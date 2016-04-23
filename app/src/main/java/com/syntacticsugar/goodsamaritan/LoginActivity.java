@@ -178,6 +178,8 @@ public class LoginActivity extends AppCompatActivity {
     public void onLoginSuccess(String userId) {
         _loginButton.setEnabled(true);
 
+        System.out.print(" **** login success " + userId);
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("userId", userId);
         startActivityForResult(intent, REQUEST_MAIN);
