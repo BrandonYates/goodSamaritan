@@ -7,9 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +26,7 @@ import java.util.Collection;
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int REQUEST_MAIN = 1;
-    ListView listView;
+    //ListView listView;
     String userInfo;
     private UserService userService = new UserService();
     OnJSONResponseCallback callback = new OnJSONResponseCallback();
@@ -87,10 +84,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //listview
         // Get ListView object from xml
-        listView = (ListView) findViewById(R.id.deedList);
+        //listView = (ListView) findViewById(R.id.deedList);
 
         // Defined Array values to show in ListView
-        String[] deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
+        //String[] deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
 
         // Define a new Adapter
         // First parameter - Context
@@ -98,14 +95,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         // Third parameter - ID of the TextView to which the data is written
         // Fourth - the Array of data
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, deedTitles);
+       // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+         //       android.R.layout.simple_list_item_1, android.R.id.text1, deedTitles);
 
         // Assign adapter to ListView
-        listView.setAdapter(adapter);
+        //listView.setAdapter(adapter);
 
         // ListView Item Click Listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+/*        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -125,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
 
         });
-        // end of listview code
+        // end of listview code */
 
 
 

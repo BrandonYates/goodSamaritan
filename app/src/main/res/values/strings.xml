@@ -42,7 +42,7 @@
     <string name="returnButtonText">Return to Main</string>
     <string name="logoutButtonText">Logout</string>
     <string name="cancelButtonText">Cancel</string>
-
-
+    <string name="createButtonText">Create A New Deed</string>
+    <string name="myDeedsText">My Deeds</string>
 
 </resources>
