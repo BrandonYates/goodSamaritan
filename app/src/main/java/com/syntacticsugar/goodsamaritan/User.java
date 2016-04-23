@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -15,7 +16,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String emailAddress;
-    private Collection<Deed> deeds;
+    private ArrayList<Deed> deeds;
     private int points;
 
     public User () {}
@@ -25,35 +26,45 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
-        this.deeds = null;
+        this.deeds = new ArrayList<Deed>();
     }
 
     //
-    public User (JSONObject object) throws JSONException{
-
-        JSONObject rawUser = (JSONObject)object.get("entity");
+    public User (JSONObject rawUser) throws JSONException{
 
         System.out.print("raw: " + rawUser.toString());
 
-        String id = (String)rawUser.get("id");
-        String fn = (String)rawUser.get("firstName");
-        String ln = (String)rawUser.get("lastName");
-        String email = (String)rawUser.get("emailAddress");
+        this.id = rawUser.getString("id");
+        this.firstName = rawUser.getString("firstName");
+        this.lastName = rawUser.getString("lastName");
+        this.emailAddress = rawUser.getString("emailAddress");
 
-        JSONArray rawDeeds = (JSONArray)rawUser.get("deeds");
+        this.points = 0;
+        this.deeds = new ArrayList<Deed>();
+        try {
+            JSONArray rawDeeds = rawUser.getJSONArray("deeds");
 
 
-        int points = 0;
-        for (int i = 0; i < rawDeeds.length(); i++) {
+            for (int i = 0; i < rawDeeds.length(); i++) {
 
-            Deed deed = new Deed(rawDeeds.getJSONObject(i));
-            this.deeds.add(deed);
-            points += deed.getPointValue();
+                Deed deed = new Deed(rawDeeds.getJSONObject(i));
+                this.deeds.add(deed);
+                this.points += deed.getPointValue();
+            }
+        } catch (JSONException e) {
+            System.out.println("deeds was null");
         }
     }
 
-    public Collection<Deed> getDeeds() { return deeds; }
+    public ArrayList<Deed> getDeeds() { return this.deeds; }
 
-    public void setDeeds(Collection<Deed> deeds) { this.deeds = deeds;}
+    public void setDeeds(ArrayList<Deed> deeds) { this.deeds = deeds;}
 
+    public String getFirstName() { return this.firstName; }
+
+    public String getLastName() { return this.lastName; }
+
+    public String getEmailAddress() { return this.emailAddress; };
+
+    public Integer getPoints() { return this.points; }
 }

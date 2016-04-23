@@ -1,7 +1,9 @@
 package com.syntacticsugar.goodsamaritan;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -22,12 +24,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.logging.Handler;
 
 import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by brandonyates on 4/21/16.
+ * Revised by jdestefanis on 4/22/16
  */
 public class MenuActivity extends AppCompatActivity {
 
@@ -41,64 +46,81 @@ public class MenuActivity extends AppCompatActivity {
     private UserService userService = new UserService();
     OnJSONResponseCallback callback = new OnJSONResponseCallback();
 
+    private class GetUser extends AsyncTask<String, Void, JSONObject> {
+        TextView menuPageTitle;
+        TextView userText;
+        TextView myPointsText;
+        TextView myDeedsText;
+        Typeface font;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            menuPageTitle = (TextView) findViewById(R.id.menuPageTitle);
+            userText = (TextView) findViewById(R.id.userText);
+            myPointsText = (TextView) findViewById(R.id.myPointsText);
+            myDeedsText = (TextView) findViewById(R.id.myDeedsText);
+            font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
+            menuPageTitle.setTypeface(font);
+            userText.setTypeface(font);
+            myPointsText.setTypeface(font);
+            myDeedsText.setTypeface(font);
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            if (userService != null && params[0] != null) {
+                try {
+                    return userService.findUserById(params[0]);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } else if (userService == null) {
+                System.out.println("User Service null");
+            } else if (params[0] == null) {
+                System.out.println("UserInfo null");
+                System.out.println(params[0]);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject obj) {
+            super.onPostExecute(obj);
+            if (obj != null) {
+                System.out.println("rawUser " + obj.toString());
+                //callback.onJSONResponse(true, obj);
+                try {
+                    User userData = new User(obj);
+                    userText.setText(userData.getFirstName());
+                    myPointsText.setText(userData.getPoints().toString());
+                    ArrayList<Deed> deeds = userData.getDeeds();
+                    String[] deedTitles = new String[deeds.size()];
+                    for (int i = 0; i < deeds.size(); ++i) {
+                        Deed deed = (Deed) deeds.toArray()[i];
+                        deedTitles[i] = deed.getDescription();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        //set custom font
-        TextView menuPageTitle = (TextView) findViewById(R.id.menuPageTitle);
-        TextView userText = (TextView) findViewById(R.id.userText);
-        TextView myPointsText = (TextView) findViewById(R.id.myPointsText);
-        TextView myDeedsText = (TextView) findViewById(R.id.myDeedsText);
-        Typeface font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
-        menuPageTitle.setTypeface(font);
-        userText.setTypeface(font);
-        myPointsText.setTypeface(font);
-        myDeedsText.setTypeface(font);
-        //end set custom font
-
-
+        //userInfo = getIntent().getStringExtra("userId");
         userInfo = getIntent().getStringExtra("userId");
-        System.out.println("user info is " + userInfo);
+        new GetUser().execute(userInfo);
 
         //listview
         // Get ListView object from xml
         listView = (ListView) findViewById(R.id.myDeedList);
-
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        if(userService != null && userInfo != null) {
-                            try {
-                                JSONObject rawUser = userService.findUserById(userInfo);
-
-                                if(rawUser != null) {
-                                    System.out.println("rawUser " + rawUser.toString());
-                                    callback.onJSONResponse(true, rawUser);
-                                    User user = new User(callback.getObject());
-                                    Collection<Deed> deeds = user.getDeeds();
-                                    String[] deedTitles = new String[deeds.size()];
-
-                                    for(int i = 0; i < deeds.size(); ++i) {
-                                        Deed deed = (Deed)deeds.toArray()[i];
-                                        deedTitles[i] = deed.getDescription();
-                                    }
-                                }
-
-                            }
-                            catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                        else if(userService == null) {
-                            System.out.println("User Service null");
-                        }
-                        else if (userInfo == null) {
-                            System.out.println("UserInfo null");
-                        }
-                    }
-                }, 3000);
 
         // Defined Array values to show in ListView
         String[] deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
@@ -253,7 +275,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void gotoMain(View view) {
-        System.out.println("gotoMenu Called!");
+        System.out.println("gotoMain Called!");
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("userId", userInfo);
