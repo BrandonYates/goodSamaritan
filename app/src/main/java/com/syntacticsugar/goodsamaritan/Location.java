@@ -31,11 +31,11 @@ public class Location {
 
     public double getLatitude() { return latitude; } //  returns the latitude
 
-    public void setLatitude(long latitude) { this.latitude = latitude; } // sets the latitude
+    public void setLatitude(double latitude) { this.latitude = latitude; } // sets the latitude
 
     public double getLongitude() { return longitude; } // returns the longitude
 
-    public void setLongitude(long longitude) { this.longitude = longitude; } // sets the longitude
+    public void setLongitude(double longitude) { this.longitude = longitude; } // sets the longitude
 
     public String toString() { // send id , lat and long to a string value
         return "Id: " + this.id + "\nLatitude: " + this.latitude + "\nLongitude: " + this.longitude ;

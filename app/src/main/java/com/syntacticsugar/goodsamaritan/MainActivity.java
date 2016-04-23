@@ -21,7 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback {
 
-    private static final int REQUEST_MAIN = 1;
+    private static final int REQUEST_MENU = 1;
     //ListView listView;
     String userInfo;
 
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         //end set custom font
 
         userInfo = getIntent().getStringExtra("userId");
-        System.out.println("user info is " + userInfo);
+        System.out.println(" ***** user info is " + userInfo);
 
         //listview
         // Get ListView object from xml
@@ -134,8 +134,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void gotoMenu(View view) {
         System.out.println("gotoMenu Called!");
 
+        System.out.print(" **** go to menu   " + userInfo);
+
         Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
         intent.putExtra("userId", userInfo);
-        startActivityForResult(intent, REQUEST_MAIN);
+        startActivityForResult(intent, REQUEST_MENU);
     }
 }
