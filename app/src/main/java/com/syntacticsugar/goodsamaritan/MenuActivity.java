@@ -1,6 +1,5 @@
 package com.syntacticsugar.goodsamaritan;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
@@ -25,8 +24,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.logging.Handler;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -276,11 +273,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoMain(View view) {
         System.out.println("gotoMain Called!");
-<<<<<<< HEAD
-=======
-
         System.out.print(" **** go to main   " + userInfo);
->>>>>>> origin/master
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("userId", userInfo);
