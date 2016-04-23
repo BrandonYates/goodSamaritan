@@ -32,6 +32,8 @@
     <string name="expirationDate">Expiration date</string>
     <string name="deedLocation">Mark Deed Location</string>
 
+    <string name="google_app_id">good-deeds-68f22</string>
+
 
     //button title strings
     <string name="menuButtonText">Menu</string>

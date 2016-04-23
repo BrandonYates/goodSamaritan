@@ -51,8 +51,8 @@
                     android:layout_weight=".7"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:id="@+id/addressText"
-                    android:text="@string/deedPoints"
+                    android:id="@+id/deedPointsTitle"
+                    android:text="Deed Points"
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:textColor="#ffffff" />
