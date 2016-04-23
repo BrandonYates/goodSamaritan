@@ -28,6 +28,7 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import butterknife.Bind;
 import cz.msebera.android.httpclient.Header;
@@ -136,12 +137,19 @@ public class MakeDeedActivity extends AppCompatActivity implements OnMapReadyCal
                     public void run() {
                         try {
                             RequestParams params = new RequestParams();
-                            params.add("desc", description);
-                            params.add("date", date);
+//                            params.add("desc", description);
+//                            params.add("date", date);
+//                            params.add("uid", userId);
+//                            params.add("latitude", String.valueOf(marker.getPosition().latitude));
+//                            params.add("longitude", String.valueOf(marker.getPosition().longitude));
+//                            params.add("pointValue", String.valueOf(pointValue));
+                            Date testDate = new Date();
+                            params.add("desc", "Test Deed");
+                            params.add("date", testDate.toString());
                             params.add("uid", userId);
-                            params.add("latitude", String.valueOf(marker.getPosition().latitude));
-                            params.add("longitude", String.valueOf(marker.getPosition().longitude));
-                            params.add("pointValue", String.valueOf(pointValue));
+                            params.add("latitude", String.valueOf(30.1894032));
+                            params.add("longitude", String.valueOf(-85.7231643));
+                            params.add("pointValue", String.valueOf(5));
 
                             RestUtils.post("createDeed/params", params, new AsyncHttpResponseHandler() {
 

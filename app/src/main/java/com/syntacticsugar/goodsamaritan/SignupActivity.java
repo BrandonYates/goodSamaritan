@@ -90,7 +90,7 @@ public class SignupActivity extends AppCompatActivity {
         final String password1 = _passwordText1.getText().toString();
 
         // TODO: Implement signup logic here.
-        boolean b = new Handler().postDelayed(
+        boolean b = new Handler().post(
                 new Runnable() {
                     public void run() {
                         try {
@@ -151,7 +151,7 @@ public class SignupActivity extends AppCompatActivity {
 
                         progressDialog.dismiss();
                     }
-                }, 3000);
+                });
 //        progressDialog.dismiss();
     }
 

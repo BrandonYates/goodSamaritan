@@ -2,7 +2,11 @@ package com.syntacticsugar.goodsamaritan;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.SyncHttpClient;
+
+import cz.msebera.android.httpclient.client.ResponseHandler;
 
 /**
  * Created by brandonyates on 4/5/16.
@@ -16,12 +20,17 @@ public class RestUtils {
     private static final String BASE_URL = "http://10.0.2.2:8080/";
 
     //Production Server
-//    private static final String BASE_URL = "http://130.211.174.74:8080/";
+    private static final String BASE_URL = "http://130.211.174.74:8080/";
 
     private static AsyncHttpClient client = new AsyncHttpClient();
+    private static SyncHttpClient syncclient = new SyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {
         client.get(getAbsoluteUrl(url), params, responseHandler);
+    }
+
+    public static void syncget(String url, RequestParams params, JsonHttpResponseHandler responseHandler) {
+        syncclient.get(getAbsoluteUrl(url), params, responseHandler);
     }
 
     public static void post(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {

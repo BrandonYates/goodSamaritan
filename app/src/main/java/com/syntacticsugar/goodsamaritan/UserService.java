@@ -131,7 +131,7 @@ public class UserService {
         System.out.println("FINDING USER BY ID");
         params.add("id", userId);
 
-        RestUtils.get("findUserById", params, new JsonHttpResponseHandler() {
+        RestUtils.syncget("findUserById", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
