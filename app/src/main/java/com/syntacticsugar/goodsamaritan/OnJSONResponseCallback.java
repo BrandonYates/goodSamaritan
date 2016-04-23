@@ -1,5 +1,6 @@
 package com.syntacticsugar.goodsamaritan;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -8,6 +9,7 @@ import org.json.JSONObject;
 public class OnJSONResponseCallback {
 
     JSONObject object;
+    JSONArray array;
 
     public void onJSONResponse(boolean success, JSONObject response) {
 
@@ -18,5 +20,15 @@ public class OnJSONResponseCallback {
         }
     }
 
+    public void onJSONArrayResponse(boolean success, JSONArray response) {
+        if(success) {
+            array = response;
+        } else {
+            array = null;
+        }
+    }
+
     public JSONObject getObject() { return object; }
+
+    public JSONArray getArray() { return array; }
 }

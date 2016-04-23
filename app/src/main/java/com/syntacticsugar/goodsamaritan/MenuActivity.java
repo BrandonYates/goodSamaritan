@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.logging.Handler;
 
 import cz.msebera.android.httpclient.Header;
@@ -41,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
     ListView listView;
     String userInfo;
     JSONArray deeds;
-    String[] deedTitles;
+    ArrayList<String> deedTitles = new ArrayList<String>();
 
     private UserService userService = new UserService();
     OnJSONResponseCallback callback = new OnJSONResponseCallback();
@@ -50,7 +52,6 @@ public class MenuActivity extends AppCompatActivity {
         TextView menuPageTitle;
         TextView userText;
         TextView myPointsText;
-        TextView myDeedsText;
         Typeface font;
 
 
@@ -60,12 +61,10 @@ public class MenuActivity extends AppCompatActivity {
             menuPageTitle = (TextView) findViewById(R.id.menuPageTitle);
             userText = (TextView) findViewById(R.id.userText);
             myPointsText = (TextView) findViewById(R.id.myPointsText);
-            myDeedsText = (TextView) findViewById(R.id.myDeedsText);
             font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
             menuPageTitle.setTypeface(font);
             userText.setTypeface(font);
             myPointsText.setTypeface(font);
-            myDeedsText.setTypeface(font);
         }
 
         @Override
@@ -95,12 +94,6 @@ public class MenuActivity extends AppCompatActivity {
                     User userData = new User(obj);
                     userText.setText(userData.getFirstName());
                     myPointsText.setText(userData.getPoints().toString());
-                    ArrayList<Deed> deeds = userData.getDeeds();
-                    String[] deedTitles = new String[deeds.size()];
-                    for (int i = 0; i < deeds.size(); ++i) {
-                        Deed deed = (Deed) deeds.toArray()[i];
-                        deedTitles[i] = deed.getDescription();
-                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -108,6 +101,83 @@ public class MenuActivity extends AppCompatActivity {
             }
         }
     }
+
+    private class GetUserDeeds extends AsyncTask<String, Void, JSONArray> {
+
+        TextView myDeedsText;
+        Typeface font;
+
+        @Override
+        protected JSONArray doInBackground(String... params) {
+            if (params[0] != null) {
+                System.out.println("Getting User's Deeds");
+                    RequestParams reqparam = new RequestParams();
+                    reqparam.add("uid", userInfo);
+
+                    RestUtils.syncget("findDeedByRequestingUserId", reqparam, new JsonHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+
+                            System.out.println("JSONObject!");
+                            System.out.println(response.toString());
+
+                            //save object for returning
+                            callback.onJSONArrayResponse(true, response);
+                        }
+                    });
+                    return callback.getArray();
+            } else {
+                System.out.println("UserInfo null");
+                System.out.println(params[0]);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            myDeedsText = (TextView) findViewById(R.id.myDeedsText);
+            font = Typeface.createFromAsset(getAssets(), "sam_marker.ttf");
+            myDeedsText.setTypeface(font);
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray obj) {
+            super.onPostExecute(obj);
+            try {
+                listView = (ListView) findViewById(R.id.myDeedList);
+                for (int i = 0; i < obj.length(); i++) {
+                        Deed d = new Deed((JSONObject) obj.get(i));
+                        deedTitles.add(d.getDescription());
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(listView.getContext(), android.R.layout.simple_list_item_1, android.R.id.text1, deedTitles);
+
+                listView.setAdapter(adapter);
+
+                // ListView Item Click Listener
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        // ListView Clicked item index
+                        int itemPosition = position;
+
+                        // ListView Clicked item value
+                        String itemValue = (String) listView.getItemAtPosition(position);
+
+                        // Show Alert
+                        Toast.makeText(getApplicationContext(),
+                                "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
+                                .show();
+
+                    }
+                });
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -117,43 +187,7 @@ public class MenuActivity extends AppCompatActivity {
         //userInfo = getIntent().getStringExtra("userId");
         userInfo = getIntent().getStringExtra("userId");
         new GetUser().execute(userInfo);
-
-        //listview
-        // Get ListView object from xml
-        listView = (ListView) findViewById(R.id.myDeedList);
-
-        // Defined Array values to show in ListView
-        String[] deedTitles = new String[] { "deed 1", "deed 2", "deed3"};
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, deedTitles);
-
-        // Assign adapter to ListView
-        listView.setAdapter(adapter);
-
-        // ListView Item Click Listener
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                // ListView Clicked item index
-                int itemPosition = position;
-
-                // ListView Clicked item value
-                String itemValue = (String) listView.getItemAtPosition(position);
-
-                // Show Alert
-                Toast.makeText(getApplicationContext(),
-                        "Position :" + itemPosition + "  ListItem : " + itemValue, Toast.LENGTH_LONG)
-                        .show();
-
-            }
-
-        });
-        // end of listview code
+        new GetUserDeeds().execute(userInfo);
     }
 
 
@@ -185,87 +219,6 @@ public class MenuActivity extends AppCompatActivity {
         System.out.println("gotoLogout Called!");
     }
 
-    public JSONArray getMyDeeds(final String myUserId){
-
-        // get the deeds
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-//                         On complete call either onLoginSuccess or onLoginFailed
-
-                        AsyncHttpClient client = new AsyncHttpClient();
-                        RequestParams params = new RequestParams();
-                        params.add("uid", myUserId);
-                        try {
-
-                            client.get("http://10.0.2.2:8080/findDeedByRequestingUserId", params, new AsyncHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                                    System.out.println("##############");
-                                    System.out.println("DEEDS");
-                                    System.out.println(responseBody);
-                                    try {
-                                        if (responseBody == null) {
-                                            System.out.println("# responseBody Null");
-                                            throw new Exception();
-                                        }
-                                        String response = new String(responseBody, "UTF-8");
-                                        // JSON Object
-                                        deeds = new JSONArray(response);
-
-                                        System.out.println("DEEDS are : ");
-                                        System.out.println(deeds.toString());
-
-//                                        JSONObject contextObj = obj.getJSONObject("context");
-//                                        JSONObject entityObj = contextObj.getJSONObject("entity");
-//
-//                                        String userId = entityObj.getString("id");
-//                                        System.out.println("userId is " + userId);
-
-                                        System.out.println("##############");
-
-                                        // deed titles into array
-                                        for (int i = 0; i < deeds.length(); ++i) {
-                                            JSONObject deed = deeds.getJSONObject(i);
-                                            String desc = deed.getString("description");
-
-                                            deedTitles[i] = desc;
-                                        }
-
-
-
-                                    } catch (Exception e) {
-                                        // TODO Auto-generated catch block
-                                        System.out.println("EXCEPTION!");
-                                        System.out.println("EXCEPTION!");
-                                        System.out.println("EXCEPTION!");
-                                        System.out.println("EXCEPTION!");
-                                        e.printStackTrace();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                                    try {
-                                        String response = new String(responseBody, "UTF-8");
-                                        System.out.println(statusCode + ": " + response);
-                                    } catch (UnsupportedEncodingException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-                        } catch (Exception e) {
-                            System.out.println(e.getMessage());
-                            e.printStackTrace();
-                        }
-
-                    }
-                }, 3000);
-        // end of gettin' da deeds
-
-       return deeds;
-    }
-
     public void createDeed(View view) {
         System.out.println("create deed Called!");
 
@@ -276,12 +229,6 @@ public class MenuActivity extends AppCompatActivity {
 
     public void gotoMain(View view) {
         System.out.println("gotoMain Called!");
-<<<<<<< HEAD
-=======
-
-        System.out.print(" **** go to main   " + userInfo);
->>>>>>> origin/master
-
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.putExtra("userId", userInfo);
         startActivityForResult(intent, REQUEST_MAIN);

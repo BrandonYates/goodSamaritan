@@ -54,7 +54,7 @@ public class Deed {
 
         this.id = rawDeed.getString("id");
         this.description = rawDeed.getString("description");
-        this.date = (Date)rawDeed.get("date");
+        this.date = new Date(rawDeed.getString("date"));
         this.requestingUserId = rawDeed.getString("requestingUserId");
         this.location = new Location(rawDeed.getJSONObject("location"));
         this.active = rawDeed.getBoolean("active");
